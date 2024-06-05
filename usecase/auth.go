@@ -1,19 +1,18 @@
 package usecase
 
+type Login struct{}
+
 type LoginInterface interface {
-	Autentikasi(username string, password string) bool
+	Autentikasi(Username, Password string) bool
 }
 
-type Login struct {
+func NewLogin() LoginInterface {
+	return &Login{}
 }
 
-func (b *Login) Autentikasi(username string, password string) bool {
-	return username == "admin" && password == "admin123"
-}
-
-func NewLogin(loginType string) LoginInterface {
-	if loginType == "basic" {
-		return &Login{}
+func (masuk *Login) Autentikasi(Username string, Password string) bool {
+	if Username == "admin" && Password == "admin123" {
+		return true
 	}
-	return nil
+	return false
 }

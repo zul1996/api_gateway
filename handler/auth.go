@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"api_gateway/usecase"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,27 +18,25 @@ func Login() AuthInterface {
 }
 
 type BodyPayLoadAuth struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string
+	Password string
 }
 
 func (a *AuthImplement) AuthLogin(c *gin.Context) {
-	var bodyPayLoad BodyPayLoadAuth
+	bodyPayloadAuth := BodyPayLoadAuth{}
+	err := c.BindJSON(&bodyPayloadAuth)
 
-	err := c.BindJSON(&bodyPayLoad)
-	if err != nil {
-		c.AbortWithError(http.StatusBadRequest, err)
-		return
-	}
+	usecase.NewLogin().Autentikasi(bodyPayloadAuth.Username, bodyPayloadAuth.Password)
 
-	if bodyPayLoad.Username == "admin" && bodyPayLoad.Password == "admin123" {
+	if usecase.NewLogin().Autentikasi(bodyPayloadAuth.Username, bodyPayloadAuth.Password) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Account retrieved successfully",
-			"data":    bodyPayLoad,
+			"message": "Anda berhasil login",
+			"data":    bodyPayloadAuth,
 		})
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Unauthorized: Invalid username or password",
+			"message": "Anda gagal login",
+			"data":    err,
 		})
 	}
 }
