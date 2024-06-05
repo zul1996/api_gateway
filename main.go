@@ -8,7 +8,7 @@ import (
 func main() {
 
 	Login := usecase.NewLogin("basic")
-	if userLogin != nil {
+	if Login != nil {
 		fmt.Println("Login user:", Login.Autentikasi("admin", "admin123"))     // Harusnya true
 		fmt.Println("Login user:", Login.Autentikasi("user", "wrongpassword")) // Harusnya false
 	} else {
