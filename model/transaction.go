@@ -5,11 +5,11 @@ import (
 )
 
 type Transaction struct {
-	ID              string    `gorm:"primaryKey" json:"id"`
-	AccountID       string    `gorm:"not null" json:"account_id"`
-	BankID          string    `gorm:"not null" json:"bank_id"`
-	Amount          float64   `gorm:"not null" json:"amount"`
-	TransactionDate time.Time `gorm:"type:timestamp with time zone;not null" json:"transaction_date"`
+	Id               string `gorm:"primaryKey"`
+	Account_id       string
+	Bank_id          string
+	Amount           int
+	Transaction_date *time.Time `gorm:"type:timestamp with time zone"`
 }
 
 func (Transaction) TableName() string {

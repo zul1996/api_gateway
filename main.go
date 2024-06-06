@@ -20,7 +20,7 @@ func main() {
 	authRoute.POST("/post", handler.Login().AuthLogin)
 
 	transactionRoute := r.Group("/transaction")
-	transactionRoute.POST("/post", handler.Transaction().CreateTransaction)
+	transactionRoute.POST("/create", handler.Transaction().CreateTransaction)
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
