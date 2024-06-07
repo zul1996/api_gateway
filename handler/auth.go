@@ -24,11 +24,16 @@ type BodyPayLoadAuth struct {
 
 func (a *AuthImplement) AuthLogin(c *gin.Context) {
 	bodyPayloadAuth := BodyPayLoadAuth{}
+
 	err := c.BindJSON(&bodyPayloadAuth)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
 
-	usecase.NewLogin().Autentikasi(bodyPayloadAuth.Username, bodyPayloadAuth.Password)
+	authenticated := usecase.NewLogin().Autentikasi(bodyPayloadAuth.Username, bodyPayloadAuth.Password)
 
-	if usecase.NewLogin().Autentikasi(bodyPayloadAuth.Username, bodyPayloadAuth.Password) {
+	if authenticated {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Anda berhasil login",
 			"data":    bodyPayloadAuth,

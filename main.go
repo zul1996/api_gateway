@@ -36,13 +36,14 @@ func main() {
 	accountRoute.GET("/balance", handler.NewAccount().GetAccountBalance)
 
 	authRoute := r.Group("/auth")
-	authRoute.POST("/post", handler.Login().AuthLogin)
+	authRoute.POST("/login", handler.Login().AuthLogin)
 
 	transactionRoute := r.Group("/transaction")
 	transactionRoute.POST("/create", handler.Transaction().CreateTransaction)
 	transactionRoute.GET("/get", func(g *gin.Context) {
-		clientResponse, err := proto.NewServiceTransactionService("service-transaction", srvTransaction.Client()).Call(context.Background(), &proto.CallRequest{
-			Name: "zoel",
+		clientResponse, err := proto.NewServiceTransactionService("service-transaction", srvTransaction.Client()).Login(context.Background(), &proto.LoginRequest{
+			Username: "zoel",
+			Password: "zoel123",
 		}, addrServiceTransactionOpt)
 
 		if err != nil {
