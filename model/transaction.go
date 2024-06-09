@@ -5,7 +5,7 @@ import (
 )
 
 type Transaction struct {
-	Id               string `gorm:"primaryKey"`
+	Id               int `gorm:"primaryKey"`
 	Account_id       string
 	Bank_id          string
 	Amount           int

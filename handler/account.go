@@ -13,25 +13,12 @@ type AccountInterface interface {
 	CreateAccount(*gin.Context)
 	UpdateAccount(*gin.Context)
 	DeleteAccount(*gin.Context)
-	GetAccountBalance(*gin.Context)
 }
 
 type accountImplement struct{}
 
 func NewAccount() AccountInterface {
 	return &accountImplement{}
-}
-
-func (a *accountImplement) GetAccountBalance(g *gin.Context) {
-	queryParam := g.Request.URL.Query()
-
-	balance := queryParam.Get("balance")
-
-	g.JSON(http.StatusOK, gin.H{
-		"message": "Account retrieved successfully",
-		"data":    map[string]string{"name": balance},
-	})
-
 }
 
 func (a *accountImplement) GetAccount(g *gin.Context) {
